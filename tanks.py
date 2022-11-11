@@ -56,7 +56,7 @@ class TankBase():
         self.turret_position = 6
     def move_tank(self):
         self.x += self.speed * self.direction[0]
-        self.y += self.speed * self.direction[1]
+        self.y += (self.speed * self.direction[1])//2
 
     def turn_turret(self, direction):
         self.turret_position += direction
