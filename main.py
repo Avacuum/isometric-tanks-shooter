@@ -36,7 +36,7 @@ player_hull = (
 )
 
 
-player = TankBase(510, 150, 10, player_hull, player_turret)
+player = TankBase(510, 150, 5, player_hull, player_turret)
 ammo = None
 while True:
     clock.tick(FPS)
@@ -46,7 +46,7 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if player.fire():
-                    ammo = Ammo(player.x, player.y, 40, player.direction)
+                    ammo = Ammo(player.x, player.y, 20, player.turret_position)
             if event.key == pygame.K_z:
                 player.turn_turret(1)
             if event.key == pygame.K_x:

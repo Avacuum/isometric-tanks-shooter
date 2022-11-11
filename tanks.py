@@ -1,6 +1,42 @@
 import pygame
 import time
 
+def translate_direction(direction: tuple()) -> int:
+    if direction == (-1, 0):
+        return 0
+    elif direction == (-1, 1):
+        return 1
+    elif direction == (0, 1):
+        return 2
+    elif direction == (1, 1):
+        return 3
+    elif direction == (1, 0):
+        return 4
+    elif direction == (1, -1):
+        return 5
+    elif direction == (0, -1):
+        return 6
+    else:
+        return 7
+
+def translate_position(position: int) -> tuple:
+    if position == 0:
+        return (-1, 0)
+    elif position == 1:
+        return (-1, 1)
+    elif position == 2:
+        return (0, 1)
+    elif position == 3:
+        return (1, 1)
+    elif position == 4:
+        return (1, 0)
+    elif position == 5:
+        return (1, -1)
+    elif position == 6:
+        return (0, -1)
+    else:
+        return (-1, -1)
+
 class TankBase():
     x = 400
     y = 200
@@ -28,7 +64,6 @@ class TankBase():
             self.turret_position = 0
         if self.turret_position == -1:
             self.turret_position = 7
-        print(self.turret_position)
 
     def fire(self):
         print(time.time()-self.last_shoot_timestamp)
@@ -39,22 +74,7 @@ class TankBase():
             return False
 
     def draw_tank(self) -> pygame.Surface:
-        if self.direction == (-1, 0):
-            hull_direction = 0
-        elif self.direction == (-1, 1):
-            hull_direction = 1
-        elif self.direction == (0, 1):
-            hull_direction = 2
-        elif self.direction == (1, 1):
-            hull_direction = 3
-        elif self.direction == (1, 0):
-            hull_direction = 4
-        elif self.direction == (1, -1):
-            hull_direction = 5
-        elif self.direction == (0, -1):
-            hull_direction = 6
-        else:
-            hull_direction = 7
+        hull_direction = translate_direction(self.direction)
 
         self.tank_surface.fill(self.EMPTY)
         self.tank_surface.blit(self.hull_images[hull_direction], (0,0))
@@ -62,15 +82,10 @@ class TankBase():
         return self.tank_surface
 
 class Ammo():
-    x = None
-    y = None
-    speed = 40
-    direction=(1, 0)
-
-    def __init__(self, x, y, speed, direction):
-        self.x = x
-        self.y = y
-        self.direction = direction
+    def __init__(self, x, y, speed, position):
+        self.x = x + 70
+        self.y = y + 70
+        self.direction = translate_position(position)
         self.speed = speed
         
     def draw_ammo(self, screen):
